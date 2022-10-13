@@ -22,3 +22,25 @@ impl Default for CPU {
         };
     }
 }
+
+impl CPU {
+    pub fn mov(&mut self, rd: u8, rs: u8) {
+        // since move is a rust keyword, the func is called mov
+        self.registers[rd as usize] = self.registers[rs as usize];
+    }
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test_mov() {
+        let mut cpu = CPU {..Default::default()};
+        cpu.registers[25] = 0x0F;
+        cpu.mov(24, 25);
+        assert!(cpu.registers[25] ==  cpu.registers[24]);
+    }
+}
+
