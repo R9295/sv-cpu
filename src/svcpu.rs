@@ -40,6 +40,9 @@ impl CPU {
     pub fn subu(&mut self, rd: u8, rs: u8, rt: u8) {
         self.registers[rd as usize] = self.registers[rs as usize] - self.registers[rt as usize]
     }
+    pub fn addu(&mut self, rd: u8, rs: u8, rt: u8) {
+        self.registers[rd as usize] = self.registers[rs as usize] + self.registers[rt as usize]
+    }
 }
 
 #[cfg(test)]
@@ -94,5 +97,15 @@ mod tests {
         cpu.registers[24] = 0x07;
         cpu.subu(23, 25, 24);
         assert!(cpu.registers[23] == 3)
+    }
+    #[test]
+    fn test_addu() {
+        let mut cpu = CPU {
+            ..Default::default()
+        };
+        cpu.registers[25] = 0x0A;
+        cpu.registers[24] = 0x07;
+        cpu.addu(23, 25, 24);
+        assert!(cpu.registers[23] == 17)
     }
 }
