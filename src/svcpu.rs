@@ -28,6 +28,9 @@ impl CPU {
         // since move is a rust keyword, the func is called mov
         self.registers[rd as usize] = self.registers[rs as usize];
     }
+    pub fn or(&mut self, rd: u8, rs: u8, rt: u8) {
+        self.registers[rd as usize] = self.registers[rs as usize] | self.registers[rt as  usize]
+    }
 }
 
 
@@ -41,6 +44,14 @@ mod tests {
         cpu.registers[25] = 0x0F;
         cpu.mov(24, 25);
         assert!(cpu.registers[25] ==  cpu.registers[24]);
+    }
+    #[test]
+    fn test_or() {
+        let mut  cpu = CPU {..Default::default()};
+        cpu.registers[25] = 0x07;
+        cpu.registers[24] = 0x0A;
+        cpu.or(23, 25, 24);
+        assert!(cpu.registers[23] ==  15)
     }
 }
 
